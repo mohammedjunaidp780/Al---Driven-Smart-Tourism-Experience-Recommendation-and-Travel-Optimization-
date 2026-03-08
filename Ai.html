@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Smart Tourism Recommendation System</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f0f4ff;
+}
+
+header{
+background:#0a66c2;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.hero{
+background:linear-gradient(120deg,#4facfe,#00f2fe);
+color:white;
+text-align:center;
+padding:40px;
+}
+
+.container{
+width:90%;
+max-width:900px;
+margin:auto;
+margin-top:30px;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+label{
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+background:#0a66c2;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#004182;
+}
+
+.result{
+margin-top:20px;
+}
+
+.card{
+background:#eef5ff;
+padding:15px;
+margin-top:10px;
+border-left:5px solid #0a66c2;
+border-radius:6px;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#0a66c2;
+color:white;
+margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>AI-Driven Smart Tourism Experience Recommendation</h1>
+<p>Travel Smart with AI</p>
+</header>
+
+<section class="hero">
+<h2>Find Your Perfect Travel Destination</h2>
+<p>Enter your travel preferences and get AI recommendations</p>
+</section>
+
+<div class="container">
+
+<h2>Travel Planner</h2>
+
+<label>Your Name</label>
+<input type="text" id="name">
+
+<label>Interest</label>
+<select id="interest">
+<option value="">Any</option>
+<option value="nature">Nature</option>
+<option value="adventure">Adventure</option>
+<option value="culture">Culture</option>
+<option value="beach">Beach</option>
+<option value="city">City</option>
+</select>
+
+<label>Region</label>
+<select id="region">
+<option value="">Any</option>
+<option value="india">India</option>
+<option value="international">International</option>
+</select>
+
+<label>Total Budget (₹)</label>
+<input type="number" id="budget">
+
+<label>Travel Days</label>
+<input type="number" id="days">
+
+<button onclick="recommend()">Get AI Recommendation</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<footer>
+AI Tourism Recommendation System
+</footer>
+
+<script>
+
+const destinations=[
+
+// INDIA
+
+{name:"Goa",type:"beach",region:"india",cost:3500,tip:"Enjoy water sports and sunset beaches"},
+{name:"Manali (Himachal Pradesh)",type:"adventure",region:"india",cost:4000,tip:"Try skiing and mountain trekking"},
+{name:"Jaipur (Rajasthan)",type:"culture",region:"india",cost:2800,tip:"Visit Amber Fort and local bazaars"},
+{name:"Munnar (Kerala)",type:"nature",region:"india",cost:3000,tip:"Explore tea gardens and waterfalls"},
+{name:"Coorg (Karnataka)",type:"nature",region:"india",cost:3200,tip:"Visit coffee plantations"},
+{name:"Ooty (Tamil Nadu)",type:"nature",region:"india",cost:3000,tip:"Take the toy train ride"},
+{name:"Rishikesh (Uttarakhand)",type:"adventure",region:"india",cost:3500,tip:"River rafting and yoga camps"},
+{name:"Darjeeling (West Bengal)",type:"nature",region:"india",cost:3000,tip:"Watch sunrise at Tiger Hill"},
+{name:"Mumbai (Maharashtra)",type:"city",region:"india",cost:4500,tip:"Visit Marine Drive and Gateway of India"},
+{name:"Delhi",type:"culture",region:"india",cost:3800,tip:"Explore Red Fort and street food"},
+
+// INTERNATIONAL
+
+{name:"Dubai (UAE)",type:"city",region:"international",cost:12000,tip:"Visit Burj Khalifa and desert safari"},
+{name:"Paris (France)",type:"culture",region:"international",cost:15000,tip:"See Eiffel Tower and museums"},
+{name:"Bali (Indonesia)",type:"beach",region:"international",cost:10000,tip:"Explore temples and beaches"},
+{name:"Switzerland",type:"nature",region:"international",cost:18000,tip:"Enjoy Alps mountain views"},
+{name:"Phuket (Thailand)",type:"beach",region:"international",cost:9000,tip:"Island hopping and nightlife"},
+{name:"Tokyo (Japan)",type:"city",region:"international",cost:17000,tip:"Experience technology and culture"},
+{name:"New York (USA)",type:"city",region:"international",cost:20000,tip:"Visit Times Square and Central Park"}
+
+];
+
+function recommend(){
+
+let name=document.getElementById("name").value;
+let interest=document.getElementById("interest").value;
+let region=document.getElementById("region").value;
+let budget=parseInt(document.getElementById("budget").value);
+let days=parseInt(document.getElementById("days").value);
+
+let output="";
+
+destinations.forEach(d=>{
+
+if((interest==d.type || interest=="") && (region==d.region || region=="")){
+
+let totalCost=d.cost*days;
+
+if(totalCost<=budget){
+
+let daily=Math.round(totalCost/days);
+
+output+=`
+<div class="card">
+<h3>${d.name}</h3>
+<p><b>Total Trip Cost:</b> ₹${totalCost}</p>
+<p><b>Daily Budget Optimization:</b> ₹${daily}</p>
+<p><b>AI Travel Tip:</b> ${d.tip}</p>
+</div>
+`;
+
+}
+
+}
+
+});
+
+if(output==""){
+output="<p>No destination found within your budget.</p>";
+}
+
+document.getElementById("result").innerHTML=
+`<h3>Hello ${name}</h3>
+<h3>Recommended Destinations</h3>
+${output}`;
+
+}
+
+</script>
+
+</body>
+</html>
